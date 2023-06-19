@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema(
       maxlength: [20, 'Username cannot be more than 20 characters'],
     },
     image: String,
+    banner: String,
     password: String,
     howls: [
       {
