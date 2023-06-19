@@ -3,7 +3,7 @@ import Hashtag  from "../models/Hashtag";
 export const getHashtag = async (req, res) =>{
     const hashtagSearched = req.params
 
-    if(!hashtagSearched || typeof hashtagSearched !== "string" || hashtagSearched.trim() === ""){
+    if(!hashtagSearched.name || typeof hashtagSearched.name !== "string" || hashtagSearched.name.trim() === ""){
         return res.status(400).json({message: "Hashtag not found"});
     }
 
