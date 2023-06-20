@@ -7,6 +7,7 @@ import {
   updateUser,
 } from '../controllers/user.controller.js'
 import { addHashtag, getHashtag } from '../controllers/hashtag.controller.js'
+import { getChats, getChat, read } from '../controllers/chat.controller.js'
 
 export const routes = Router()
 
@@ -18,3 +19,7 @@ routes.put('/users/password/:id', resetPassword)
 
 routes.get('/hashtags/:name', getHashtag)
 routes.post('/hashtags', addHashtag)
+
+routes.get('/chats/:idUser', getChats)
+routes.get('/chats/:firstId/:secondId', getChat)
+routes.put('/chats/read/:idChat/:idUser', read)
