@@ -1,4 +1,4 @@
-import Hashtag  from "../models/Hashtag";  
+import Hashtag  from "../models/Hashtag.js";  
 
 export const getHashtag = async (req, res) =>{
     const hashtagSearched = req.params
