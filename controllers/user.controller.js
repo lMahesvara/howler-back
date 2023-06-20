@@ -41,7 +41,7 @@ export const addUser = async (req, res) => {
   try {
     const user = new User({ name, email, password, image, username, banner })
     await user.save()
-    res.json({ message: 'User saved' })
+    res.json(user)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
