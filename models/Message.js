@@ -15,6 +15,10 @@ const MessageSchema = new mongoose.Schema({
     maxlength: [140, 'Message cannot be more than 140 characters'],
   },
   image: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 export default mongoose.models.Message ||
