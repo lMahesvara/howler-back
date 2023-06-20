@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
-const MONGODB_URI =
-  process.env.MONGODB_URI ||
-  'mongodb+srv://admin:2OCpWXornrvcp8fc@cluster0.pe9ii90.mongodb.net/howler?retryWrites=true&w=majority'
+dotenv.config()
+
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
   throw new Error(
