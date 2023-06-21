@@ -10,12 +10,14 @@ import { addHashtag, getHashtags } from '../controllers/hashtag.controller.js'
 import { getChats, getChat, read } from '../controllers/chat.controller.js'
 import { addMessage, getMessages } from '../controllers/message.controller.js'
 import { login } from '../controllers/auth.controller.js'
-import {
-  followUser,
-  getFollowers,
-  getFollowing,
-  unfollowUser,
-} from '../controllers/follow.controller.js'
+
+import { addHowl, getHowlById, getHowls, getHowlsByHashtag, getHowlsByUserId } from '../controllers/howl.controller.js'
+import { followUser, getFollowers, getFollowing, unfollowUser } from '../controllers/follow.controller.js'
+import{
+  addNotification,
+  getNotifications,
+  readNotification
+} from '../controllers/notification.controller.js'
 
 export const routes = Router()
 
@@ -41,3 +43,13 @@ routes.get('/follow/getFollowing/:idUser', getFollowing)
 routes.patch('/follow/unfollow/:idUserUnfollow/:idUser', unfollowUser)
 
 routes.post('/auth/login', login)
+
+routes.get('/howls/howlby/:idHowl',getHowlById)
+routes.get('/howls/user/:idUser',getHowlsByUserId)
+routes.get('/howls/hashtag/:hashtag', getHowlsByHashtag)
+routes.post('/howls', addHowl)
+routes.get('/howls/howls', getHowls)
+
+routes.post('/notification',addNotification)
+routes.get('/notification/notifications/:userTo',getNotifications)
+routes.get('/notification/:id', readNotification)

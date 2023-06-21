@@ -6,7 +6,7 @@ import swagger from './utils/swagger.json' assert { type: 'json' }
 import swaggerUi from 'swagger-ui-express'
 
 const app = express()
-dbConnect()
+await dbConnect()
 
 app.use(cors())
 app.use(express.json())

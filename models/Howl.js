@@ -14,7 +14,10 @@ const HowlSchema = new mongoose.Schema({
     required: [true, 'Please provide a text for this howl.'],
     maxlength: [140, 'Howl cannot be more than 140 characters'],
   },
-  image: String,
+  image: {
+    type: String,
+    default: ""
+  },
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -44,3 +47,5 @@ const HowlSchema = new mongoose.Schema({
     },
   ],
 })
+
+export default mongoose.models.Howl || mongoose.model('Howl', HowlSchema)
