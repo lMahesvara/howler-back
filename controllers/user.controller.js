@@ -83,10 +83,12 @@ export const resetPassword = async (req, res) => {
   }
   const { password } = req.body
 
+  const hashedPassword = bcrypt.hashSync(password, 10)
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { password },
+      { password: hashedPassword },
       { new: true }
     )
     res.json(updatedUser)
