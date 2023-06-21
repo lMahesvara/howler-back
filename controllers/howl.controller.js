@@ -73,3 +73,36 @@ export const getHowlsByHashtag = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+export const getHowls = async (_, res) => {
+    try {
+        const howls = await Howl.find({})
+        res.json(howls)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+export const likeHowl  = async (req, res) => {
+    const { idHowl, idUser } = req.params
+
+    if (!idHowl || !idUser){
+        return res.status(400).json({ message: 'Please provide an id' })
+    }
+    let liked = false;
+    try {
+        const howl = await Howl.findById(idHowl)
+        if(howl.likes.includes(idUser)){
+            howl.likes = howl.likes.filter(id => id !== idUser)
+            liked = false
+        }else{
+            howl.likes.push(idUser)
+            liked = true
+        }
+        await howl.save()
+        res.json({liked, likes: howl.likes.length})
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
