@@ -6,7 +6,7 @@ import {
   resetPassword,
   updateUser,
 } from '../controllers/user.controller.js'
-import { addHashtag, getHashtag } from '../controllers/hashtag.controller.js'
+import { addHashtag, getHashtags } from '../controllers/hashtag.controller.js'
 import { getChats, getChat, read } from '../controllers/chat.controller.js'
 import { addMessage, getMessages } from '../controllers/message.controller.js'
 import { login } from '../controllers/auth.controller.js'
@@ -25,7 +25,7 @@ routes.post('/users', addUser)
 routes.put('/users/:id', updateUser)
 routes.put('/users/password/:id', resetPassword)
 
-routes.get('/hashtags/:name', getHashtag)
+routes.get('/hashtags/:name', getHashtags)
 routes.post('/hashtags', addHashtag)
 
 routes.get('/chats/:idUser', getChats)
