@@ -16,6 +16,7 @@ import {
   getFollowing,
   unfollowUser,
 } from '../controllers/follow.controller.js'
+import { addHowl, getHowlById, getHowlsByHashtag, getHowlsByUserId } from '../controllers/howl.controller.js'
 
 export const routes = Router()
 
@@ -41,3 +42,7 @@ routes.get('/follow/getFollowing/:idUser', getFollowing)
 routes.patch('/follow/unfollow/:idUserUnfollow/:idUser', unfollowUser)
 
 routes.post('/auth/login', login)
+routes.get('/howls/:idHowl',getHowlById)
+routes.get('/howls/user/:idUser',getHowlsByUserId)
+routes.get('/howls/hashtag/:hashtag', getHowlsByHashtag)
+routes.post('/howls', addHowl)
