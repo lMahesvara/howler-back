@@ -1,0 +1,1081 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Howler API",
+    "version": "1.0",
+    "description": "Howler API",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The user's name."
+          },
+          "email": {
+            "type": "string",
+            "description": "The user's email."
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password."
+          },
+          "username": {
+            "type": "string",
+            "description": "The user's username."
+          },
+          "image": {
+            "type": "string",
+            "description": "The user's image."
+          },
+          "banner": {
+            "type": "string",
+            "description": "The user's banner."
+          },
+          "howls": {
+            "type": "array",
+            "description": "The user's howls.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followers": {
+            "type": "array",
+            "description": "The user's followers.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "following": {
+            "type": "array",
+            "description": "The user's following.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The user's creation date."
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The user's update date."
+          }
+        },
+        "required": ["name", "email", "password", "username"]
+      },
+      "Howl": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "The howl's user."
+          },
+          "date": {
+            "type": "string",
+            "description": "The howl's date."
+          },
+          "text": {
+            "type": "string",
+            "description": "The howl's text."
+          },
+          "image": {
+            "type": "string",
+            "description": "The howl's image."
+          },
+          "likes": {
+            "type": "array",
+            "description": "The howl's likes.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "replies": {
+            "type": "array",
+            "description": "The howl's replies.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "hashtags": {
+            "type": "array",
+            "description": "The howl's hashtags.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "type": {
+            "type": "string",
+            "description": "The howl's type."
+          },
+          "rehowls": {
+            "type": "array",
+            "description": "The howl's rehowls.",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["user", "text", "type"]
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "description": "The message's chat."
+          },
+          "sender": {
+            "type": "string",
+            "description": "The message's sender."
+          },
+          "text": {
+            "type": "string",
+            "description": "The message's text."
+          },
+          "image": {
+            "type": "string",
+            "description": "The message's image."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The message's creation date."
+          }
+        },
+        "required": ["chat", "sender", "text"]
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "members": {
+            "type": "array",
+            "description": "The chat's members.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unread": {
+            "type": "array",
+            "description": "The chat's unread messages.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "member": {
+                  "type": "string",
+                  "description": "The unread message's member."
+                },
+                "amount": {
+                  "type": "number",
+                  "description": "The unread message's amount."
+                }
+              }
+            }
+          },
+          "lastMessage": {
+            "type": "object",
+            "description": "The chat's last message."
+          }
+        },
+        "required": ["members"]
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "userTo": {
+            "type": "string",
+            "description": "The notification's userTo."
+          },
+          "userFrom": {
+            "type": "string",
+            "description": "The notification's userFrom."
+          },
+          "type": {
+            "type": "string",
+            "description": "The notification's type."
+          },
+          "read": {
+            "type": "boolean",
+            "description": "The notification's read."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The notification's creation date."
+          },
+          "howl": {
+            "type": "string",
+            "description": "The notification's howl."
+          },
+          "title": {
+            "type": "string",
+            "description": "The notification's title."
+          },
+          "body": {
+            "type": "string",
+            "description": "The notification's body."
+          }
+        },
+        "required": ["userTo", "userFrom", "type"]
+      },
+      "Hashtag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The hashtag's name."
+          }
+        },
+        "required": ["name"]
+      }
+    }
+  },
+  "paths": {
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Get a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the user to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "description": "Update a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User object that needs to be updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The user's name."
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "The user's image."
+                  },
+                  "banner": {
+                    "type": "string",
+                    "description": "The user's banner."
+                  }
+                },
+                "required": ["name"]
+              },
+              "example": {
+                "name": "John Doe2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/users/username/{username}": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Get users by username",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "description": "Username of the users to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of user objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "648f6805f51605bcb4e7cf68",
+                    "name": "John Doe",
+                    "email": "",
+                    "username": "asdasd",
+                    "howls": [],
+                    "followers": ["64910ab4390610b3c48d9bac"],
+                    "following": [],
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "updatedAt": "2023-06-21T03:11:47.708Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "description": "Create a user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            },
+            "example": {
+              "name": "John Doe",
+              "email": "johnD@gmail.com",
+              "password": "johnD123",
+              "username": "johnD"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User object that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "johnD@gmail.com",
+                "password": "johnD123",
+                "username": "johnD"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/password/{id}": {
+      "put": {
+        "tags": ["Users"],
+        "description": "Update a user's password by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User object that needs to be updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "The user's password."
+                  }
+                },
+                "required": ["password"]
+              },
+              "example": {
+                "password": "johnD123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/hashtags/{name}": {
+      "get": {
+        "tags": ["Hashtags"],
+        "description": "Get hashtags by name",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "description": "Name of the hashtags to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of hashtag objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hashtag"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "name": "ea",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid name supplied"
+          },
+          "404": {
+            "description": "Hashtag not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/hashtags": {
+      "post": {
+        "tags": ["Hashtags"],
+        "description": "Create a hashtag",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Hashtag object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Hashtag"
+            },
+            "example": {
+              "name": "ea"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Hashtag object that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hashtag"
+              },
+              "example": {
+                "name": "ea"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A hashtag object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hashtag"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "name": "ea",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Hashtag not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/chats/{idUser}": {
+      "get": {
+        "tags": ["Chats"],
+        "description": "Get chats by user id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of chat objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Chat"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "members": ["64910ab4390610b3c48d9bac"],
+                    "unread": [
+                      {
+                        "member": "64910ab4390610b3c48d9bac",
+                        "amount": 1
+                      }
+                    ],
+                    "lastMessage": {
+                      "_id": "64924cc1e362f005f8172fc0",
+                      "chat": "64924cc1e362f005f8172fc0",
+                      "sender": "64910ab4390610b3c48d9bac",
+                      "text": "Hello",
+                      "createdAt": "2023-06-18T20:24:37.343Z",
+                      "__v": 0
+                    },
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Chat not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/chats/{firstId}/{secondId}": {
+      "get": {
+        "tags": ["Chats"],
+        "description": "Get a chat by two user ids (if it exists) and create it if it doesn't exist",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "firstId",
+            "required": true,
+            "description": "ID of the first user",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "secondId",
+            "required": true,
+            "description": "ID of the second user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A chat object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Chat"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "members": ["64910ab4390610b3c48d9bac"],
+                  "unread": [
+                    {
+                      "member": "64910ab4390610b3c48d9bac",
+                      "amount": 1
+                    }
+                  ],
+                  "lastMessage": {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "chat": "64924cc1e362f005f8172fc0",
+                    "sender": "64910ab4390610b3c48d9bac",
+                    "text": "Hello",
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  },
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Chat not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/chats/read/{idChat}/{idUser}": {
+      "put": {
+        "tags": ["Chats"],
+        "description": "Update a chat's unread messages by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idChat",
+            "required": true,
+            "description": "ID of the chat to update",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A chat object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Chat"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "members": ["64910ab4390610b3c48d9bac"],
+                  "unread": [
+                    {
+                      "member": "64910ab4390610b3c48d9bac",
+                      "amount": 0
+                    }
+                  ],
+                  "lastMessage": {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "chat": "64924cc1e362f005f8172fc0",
+                    "sender": "64910ab4390610b3c48d9bac",
+                    "text": "Hello",
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  },
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Chat not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/messages/{idChat}": {
+      "get": {
+        "tags": ["Messages"],
+        "description": "Get messages by chat id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idChat",
+            "required": true,
+            "description": "ID of the chat to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of message objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "chat": "64924cc1e362f005f8172fc0",
+                    "sender": "64910ab4390610b3c48d9bac",
+                    "text": "Hello",
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Message not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Messages"],
+        "description": "Create a message",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Message object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Message"
+            },
+            "example": {
+              "chat": "64924cc1e362f005f8172fc0",
+              "sender": "64910ab4390610b3c48d9bac",
+              "text": "Hello"
+            }
+          },
+          {
+            "in": "path",
+            "name": "idChat",
+            "required": true,
+            "description": "ID of the chat to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Message object that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              },
+              "example": {
+                "chat": "64924cc1e362f005f8172fc0",
+                "sender": "64910ab4390610b3c48d9bac",
+                "text": "Hello"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A message object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "chat": "64924cc1e362f005f8172fc0",
+                  "sender": "64910ab4390610b3c48d9bac",
+                  "text": "Hello",
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Message not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "Login a user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be logged in",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "The user's username."
+                },
+                "password": {
+                  "type": "string",
+                  "description": "The user's password."
+                }
+              }
+            },
+            "example": {
+              "username": "johnD",
+              "password": "johnD123"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User object that needs to be logged in",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "The user's username."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The user's password."
+                  }
+                }
+              },
+              "example": {
+                "username": "johnD",
+                "password": "johnD123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}
