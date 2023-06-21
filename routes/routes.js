@@ -10,6 +10,11 @@ import { addHashtag, getHashtag } from '../controllers/hashtag.controller.js'
 import { getChats, getChat, read } from '../controllers/chat.controller.js'
 import { addMessage, getMessages } from '../controllers/message.controller.js'
 import { followUser, getFollowers, getFollowing, unfollowUser } from '../controllers/follow.controller.js'
+import{
+  addNotification,
+  getNotifications,
+  readNotification
+} from '../controllers/notification.controller.js'
 
 export const routes = Router()
 
@@ -33,3 +38,7 @@ routes.patch('/follow/:idUserFollow/:idUser' , followUser)
 routes.get('/follow/getFollowers/:idUser', getFollowers)
 routes.get('/follow/getFollowing/:idUser', getFollowing)
 routes.patch('/follow/unfollow/:idUserUnfollow/:idUser' , unfollowUser)
+
+routes.post('/notification',addNotification)
+routes.get('/notification/notifications/:userTo',getNotifications)
+routes.get('/notification/:id', readNotification)
