@@ -4,7 +4,7 @@ import dbConnect from './utils/dbConnect.js'
 import { routes } from './routes/routes.js'
 
 const app = express()
-console.log(await dbConnect())
+await dbConnect()
 
 app.use(cors())
 app.use(express.json())

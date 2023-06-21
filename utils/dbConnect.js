@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
-const uriAtlas='mongodb+srv://admin:2OCpWXornrvcp8fc@cluster0.pe9ii90.mongodb.net/howler?retryWrites=true&w=majority'
-const uriLocal='mongodb://127.0.0.1:27017/dbtest';
-const MONGODB_URI =
-  process.env.MONGODB_URI || uriLocal
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
   throw new Error(
