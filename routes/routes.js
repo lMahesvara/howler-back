@@ -17,6 +17,12 @@ import {
   unfollowUser,
 } from '../controllers/follow.controller.js'
 import { addHowl, getHowlById, getHowlsByHashtag, getHowlsByUserId } from '../controllers/howl.controller.js'
+import { followUser, getFollowers, getFollowing, unfollowUser } from '../controllers/follow.controller.js'
+import{
+  addNotification,
+  getNotifications,
+  readNotification
+} from '../controllers/notification.controller.js'
 
 export const routes = Router()
 
@@ -46,3 +52,8 @@ routes.get('/howls/:idHowl',getHowlById)
 routes.get('/howls/user/:idUser',getHowlsByUserId)
 routes.get('/howls/hashtag/:hashtag', getHowlsByHashtag)
 routes.post('/howls', addHowl)
+routes.patch('/follow/unfollow/:idUserUnfollow/:idUser' , unfollowUser)
+
+routes.post('/notification',addNotification)
+routes.get('/notification/notifications/:userTo',getNotifications)
+routes.get('/notification/:id', readNotification)
