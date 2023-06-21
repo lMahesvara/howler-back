@@ -10,12 +10,7 @@ import { addHashtag, getHashtags } from '../controllers/hashtag.controller.js'
 import { getChats, getChat, read } from '../controllers/chat.controller.js'
 import { addMessage, getMessages } from '../controllers/message.controller.js'
 import { login } from '../controllers/auth.controller.js'
-import {
-  followUser,
-  getFollowers,
-  getFollowing,
-  unfollowUser,
-} from '../controllers/follow.controller.js'
+
 import { addHowl, getHowlById, getHowlsByHashtag, getHowlsByUserId } from '../controllers/howl.controller.js'
 import { followUser, getFollowers, getFollowing, unfollowUser } from '../controllers/follow.controller.js'
 import{
