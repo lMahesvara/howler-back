@@ -57,7 +57,7 @@ routes.post('/auth/login', login)
 
 routes.get('/howls/:idHowl', getHowlById)
 routes.get('/howls/user/:idUser', getHowlsByUserId)
-routes.get('/howls/hashtag/:hashtag', getHowlsByHashtag)
+routes.get('/howls/hashtag/:idHashtag', getHowlsByHashtag)
 routes.post('/howls', addHowl)
 routes.get('/howls', getHowls)
 

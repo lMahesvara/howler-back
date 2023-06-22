@@ -1242,6 +1242,222 @@
           }
         }
       }
+    },
+    "/howls": {
+      "get": {
+        "tags": ["Howls"],
+        "description": "Get all howls",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "An array of howl objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Howl"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "user": "64910ab4390610b3c48d9bac",
+                    "text": "Hello",
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Howls"],
+        "description": "Create a howl",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Howl object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Howl"
+            },
+            "example": {
+              "user": "64910ab4390610b3c48d9bac",
+              "text": "Hello"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Howl object that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Howl"
+              },
+              "example": {
+                "user": "64910ab4390610b3c48d9bac",
+                "text": "Hello"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A howl object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Howl"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "user": "64910ab4390610b3c48d9bac",
+                  "text": "Hello",
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/howls/{idHowl}": {
+      "get": {
+        "tags": ["Howls"],
+        "description": "Get a howl by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idHowl",
+            "required": true,
+            "description": "ID of the howl to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A howl object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Howl"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "user": "64910ab4390610b3c48d9bac",
+                  "text": "Hello",
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/howls/user/{idUser}": {
+      "get": {
+        "tags": ["Howls"],
+        "description": "Get howls by user id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of howl objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Howl"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "user": "64910ab4390610b3c48d9bac",
+                    "text": "Hello",
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/howls/hashtag/{idHashtag}": {
+      "get": {
+        "tags": ["Howls"],
+        "description": "Get howls by hashtag id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idHashtag",
+            "required": true,
+            "description": "ID of the hashtag to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of howl objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Howl"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "user": "64910ab4390610b3c48d9bac",
+                    "text": "Hello",
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
   }
 }
