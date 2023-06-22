@@ -1076,6 +1076,172 @@
           }
         }
       }
+    },
+    "/notifications": {
+      "post": {
+        "tags": ["Notifications"],
+        "description": "Send a notification",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Notification object that needs to be sent",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Notification"
+            },
+            "example": {
+              "userTo": "64910ab4390610b3c48d9bac",
+              "userFrom": "648f6805f51605bcb4e7cf68",
+              "type": "follow"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Notification object that needs to be sent",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Notification"
+              },
+              "example": {
+                "userTo": "64910ab4390610b3c48d9bac",
+                "userFrom": "648f6805f51605bcb4e7cf68",
+                "type": "follow"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A notification object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "userTo": "64910ab4390610b3c48d9bac",
+                  "userFrom": "648f6805f51605bcb4e7cf68",
+                  "type": "follow",
+                  "read": false,
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Notification not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/notifications/{userTo}": {
+      "get": {
+        "tags": ["Notifications"],
+        "description": "Get notifications by userTo",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userTo",
+            "required": true,
+            "description": "ID of the userTo to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of notification objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "64924cc1e362f005f8172fc0",
+                    "userTo": "64910ab4390610b3c48d9bac",
+                    "userFrom": "648f6805f51605bcb4e7cf68",
+                    "type": "follow",
+                    "read": false,
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Notification not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/notifications/read/{id}": {
+      "patch": {
+        "tags": ["Notifications"],
+        "description": "Set a notification as read by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of the notification to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A notification object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Notification"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "userTo": "64910ab4390610b3c48d9bac",
+                  "userFrom": "648f6805f51605bcb4e7cf68",
+                  "type": "follow",
+                  "read": true,
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Notification not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
   }
 }
