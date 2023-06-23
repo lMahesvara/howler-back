@@ -17,6 +17,7 @@ import {
   getHowls,
   getHowlsByHashtag,
   getHowlsByUserId,
+  replyHowl,
 } from '../controllers/howl.controller.js'
 import {
   followUser,
@@ -60,6 +61,7 @@ routes.get('/howls/user/:idUser', getHowlsByUserId)
 routes.get('/howls/hashtag/:idHashtag', getHowlsByHashtag)
 routes.post('/howls', addHowl)
 routes.get('/howls', getHowls)
+routes.patch('/howls/howlsReply', replyHowl)
 
 routes.post('/notifications', addNotification)
 routes.get('/notifications/:userTo', getNotifications)
