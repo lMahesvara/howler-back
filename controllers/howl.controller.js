@@ -110,7 +110,8 @@ export const likeHowl = async (req, res) => {
 }
 
 export const replyHowl = async (req, res) => {
-  const { idHowl, idUser, text, image, hashtags} = req.body
+  const {idHowl} = req.params
+  const { idUser, text, image, hashtags} = req.body
 
   if (!idHowl || !idUser || !text) {
     return res.status(400).json({ message: 'Please provide all fields' })
