@@ -108,3 +108,41 @@ export const likeHowl = async (req, res) => {
     res.status(500).json({ message: error.message })
   }
 }
+
+export const replyHowl = async (req, res) => {
+  const {idHowl} = req.params
+  const { idUser, text, image, hashtags} = req.body
+
+  if (!idHowl || !idUser || !text) {
+    return res.status(400).json({ message: 'Please provide all fields' })
+  }
+
+  try {
+    const howl = await Howl.findById(idHowl)
+    const idsHashtags = []
+
+    if (hashtags) {
+      for (const hashtag of hashtags) {
+        const newHashtag = await Hashtag.findOne({ name: hashtag })
+        if (!newHashtag) {
+          const newHashtag = new Hashtag({ name: hashtag })
+          await newHashtag.save()
+          idsHashtags.push(newHashtag.id)
+        } else {
+          idsHashtags.push(newHashtag.id)
+        }
+      }
+    }
+    
+    const reply = new Howl({ user: idUser, text, image, type: 'reply', hashtags: idsHashtags })
+
+    await reply.save()
+    howl.replies.push(reply)
+
+    await howl.save()
+    res.status(201).json(reply)
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
