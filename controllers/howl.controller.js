@@ -155,7 +155,7 @@ export const replyHowl = async (req, res) => {
   }
 }
 
-export const rehowl = async (res, req) => {
+export const rehowl = async (req, res) => {
   const { idHowl } = req.params
   const { idUser } = req.body
 
@@ -168,8 +168,8 @@ export const rehowl = async (res, req) => {
     howl.rehowls.push(idUser)
 
     // const rehowl = new Howl({ user: idUser, text: howl.text, image: howl.image, type: 'rehowl' })
-    await rehowl.save()
-    howl.rehowls.push(rehowl)
+    await howl.save()
+    howl.rehowls.push(howl)
     await howl.save()
 
     const userUpdated = await User.findOneAndUpdate(
@@ -178,7 +178,7 @@ export const rehowl = async (res, req) => {
       { new: true }
       )
 
-    res.status(201).json(rehowl)
+    res.status(201).json(howl)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
