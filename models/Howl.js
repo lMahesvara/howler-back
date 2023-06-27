@@ -37,7 +37,7 @@ const HowlSchema = new mongoose.Schema({
   ],
   type: {
     type: String,
-    enum: ['howl', 'reply', 'comment'],
+    enum: ['howl', 'reply'],
     default: 'howl',
   },
   rehowls: [
