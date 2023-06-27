@@ -4,25 +4,16 @@ import User from '../models/User.js'
 
 export const addHowl = async (req, res) => {
   const { user, text, image, hashtags } = req.body
-  console.log('addHowl', req.body)
+
 
   if (!user || !text) {
     return res.status(400).json({ message: 'Please provide all fields' })
   }
   try {
-    const idsHashtags = []
+    let idsHashtags
 
     if (hashtags) {
-      for (const hashtag of hashtags) {
-        const newHashtag = await Hashtag.findOne({ name: hashtag })
-        if (!newHashtag) {
-          const newHashtag = new Hashtag({ name: hashtag })
-          await newHashtag.save()
-          idsHashtags.push(newHashtag.id)
-        } else {
-          idsHashtags.push(newHashtag.id)
-        }
-      }
+      idsHashtags = await existingHashtag(hashtags)
     }
 
     const howl = new Howl({ user, text, image, hashtags: idsHashtags })
@@ -127,19 +118,10 @@ export const replyHowl = async (req, res) => {
 
   try {
     const howl = await Howl.findById(idHowl)
-    const idsHashtags = []
+    let idsHashtags
 
     if (hashtags) {
-      for (const hashtag of hashtags) {
-        const newHashtag = await Hashtag.findOne({ name: hashtag })
-        if (!newHashtag) {
-          const newHashtag = new Hashtag({ name: hashtag })
-          await newHashtag.save()
-          idsHashtags.push(newHashtag.id)
-        } else {
-          idsHashtags.push(newHashtag.id)
-        }
-      }
+      idsHashtags = await existingHashtag(hashtags)
     }
     
     const reply = new Howl({ user: idUser, text, image, type: 'reply', hashtags: idsHashtags })
@@ -182,4 +164,19 @@ export const rehowl = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
+}
+
+const existingHashtag = async(hashtags) => {
+  const idsHashtags = []
+  for (const hashtag of hashtags) {
+    const newHashtag = await Hashtag.findOne({ name: hashtag })
+    if (!newHashtag) {
+      const newHashtag = new Hashtag({ name: hashtag })
+      await newHashtag.save()
+      idsHashtags.push(newHashtag.id)
+    } else {
+      idsHashtags.push(newHashtag.id)
+    }
+  }
+  return idsHashtags
 }
