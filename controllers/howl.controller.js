@@ -1,5 +1,6 @@
 import Howl from '../models/Howl.js'
 import Hashtag from '../models/Hashtag.js'
+import User from '../models/User.js'
 
 export const addHowl = async (req, res) => {
   const { user, text, image, hashtags } = req.body
@@ -26,6 +27,13 @@ export const addHowl = async (req, res) => {
 
     const howl = new Howl({ user, text, image, hashtags: idsHashtags })
     await howl.save()
+
+    const userUpdated = await User.findOneAndUpdate(
+      { _id: user },
+      { $push: { howls: howl.id } },
+      { new: true }
+      )
+
     res.status(201).json(howl)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -142,6 +150,35 @@ export const replyHowl = async (req, res) => {
     await howl.save()
     res.status(201).json(reply)
 
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+export const rehowl = async (res, req) => {
+  const { idHowl } = req.params
+  const { idUser } = req.body
+
+  if (!idHowl || !idUser) {
+    return res.status(400).json({ message: 'Please provide all fields' })
+  }
+
+  try {
+    const howl = await Howl.findById(idHowl)
+    howl.rehowls.push(idUser)
+
+    // const rehowl = new Howl({ user: idUser, text: howl.text, image: howl.image, type: 'rehowl' })
+    await rehowl.save()
+    howl.rehowls.push(rehowl)
+    await howl.save()
+
+    const userUpdated = await User.findOneAndUpdate(
+      { _id: idUser },
+      { $push: { howls: howl.id } },
+      { new: true }
+      )
+
+    res.status(201).json(rehowl)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
