@@ -10,6 +10,7 @@ import { addHashtag, getHashtags } from '../controllers/hashtag.controller.js'
 import { getChats, getChat, read } from '../controllers/chat.controller.js'
 import { addMessage, getMessages } from '../controllers/message.controller.js'
 import { login } from '../controllers/auth.controller.js'
+import { followUser, getFollowers, getFollowing, unfollowUser } from '../controllers/follow.controller.js'
 
 import {
   addHowl,
@@ -51,8 +52,8 @@ routes.get('/messages/:idChat', getMessages)
 routes.post('/messages/:idChat', addMessage)
 
 routes.patch('/follow/:idUserFollow/:idUser', followUser)
-routes.get('/follow/getFollowers/:idUser', getFollowers)
-routes.get('/follow/getFollowing/:idUser', getFollowing)
+routes.get('/follow/followers/:idUser', getFollowers)
+routes.get('/follow/following/:idUser', getFollowing)
 routes.patch('/follow/unfollow/:idUserUnfollow/:idUser', unfollowUser)
 
 routes.post('/auth/login', login)
