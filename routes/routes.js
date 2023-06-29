@@ -51,8 +51,8 @@ routes.get('/messages/:idChat', getMessages)
 routes.post('/messages/:idChat', addMessage)
 
 routes.patch('/follow/:idUserFollow/:idUser', followUser)
-routes.get('/follow/getFollowers/:idUser', getFollowers)
-routes.get('/follow/getFollowing/:idUser', getFollowing)
+routes.get('/follow/Followers/:idUser', getFollowers)
+routes.get('/follow/Following/:idUser', getFollowing)
 routes.patch('/follow/unfollow/:idUserUnfollow/:idUser', unfollowUser)
 
 routes.post('/auth/login', login)
