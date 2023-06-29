@@ -1,4 +1,5 @@
 import User from '../models/User.js'
+import bcrypt from 'bcrypt'
 
 export const getUser = async (req, res) => {
   const { id } = req.params
@@ -38,8 +39,17 @@ export const addUser = async (req, res) => {
   if (!name || !email || !password || !username) {
     return res.status(400).json({ message: 'Please provide all fields' })
   }
+
+  const hashedPassword = bcrypt.hashSync(password, 10)
   try {
-    const user = new User({ name, email, password, image, username, banner })
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      image,
+      username,
+      banner,
+    })
     await user.save()
     res.json(user)
   } catch (error) {
@@ -73,10 +83,12 @@ export const resetPassword = async (req, res) => {
   }
   const { password } = req.body
 
+  const hashedPassword = bcrypt.hashSync(password, 10)
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { password },
+      { password: hashedPassword },
       { new: true }
     )
     res.json(updatedUser)
