@@ -50,3 +50,22 @@ routes.put('/chats/read/:idChat/:idUser', read)
 
 routes.get('/messages/:idChat', getMessages)
 routes.post('/messages/:idChat', addMessage)
+
+routes.patch('/follow/:idUserFollow/:idUser', followUser)
+routes.get('/follow/followers/:idUser', getFollowers)
+routes.get('/follow/following/:idUser', getFollowing)
+routes.patch('/follow/unfollow/:idUserUnfollow/:idUser', unfollowUser)
+
+routes.post('/auth/login', login)
+
+routes.get('/howls/:idHowl', getHowlById)
+routes.get('/howls/user/:idUser', getHowlsByUserId)
+routes.get('/howls/hashtag/:idHashtag', getHowlsByHashtag)
+routes.post('/howls', addHowl)
+routes.get('/howls', getHowls)
+routes.post('/howls/reply/:idHowl', replyHowl)
+routes.post('/howls/rehowl/:idHowl', rehowl)
+
+routes.post('/notifications', addNotification)
+routes.get('/notifications/:userTo', getNotifications)
+routes.patch('/notifications/read/:id', readNotification)
