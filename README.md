@@ -32,7 +32,6 @@ npm install
 node index.js
 ```
 
-
 6. The API will be available at `http://localhost:3000`.
 
 ## Usage
@@ -53,14 +52,19 @@ The Howler-back API provides the following endpoints:
 - `POST /messages/:idChat`: Sends a message to a chat.
 - `POST /auth/login`: Authenticates a user and generates a token.
 - `PATCH /follow/:idUserFollow/:idUser`: Follows a user.
-- `GET /follow/getFollowers/:idUser`: Retrieves followers for a user.
-- `GET /follow/getFollowing/:idUser`: Retrieves users being followed by a user.
+- `GET /follow/followers/:idUser`: Retrieves followers for a user.
+- `GET /follow/following/:idUser`: Retrieves users being followed by a user.
 - `PATCH /follow/unfollow/:idUserUnfollow/:idUser`: Unfollows a user.
 - `GET /howls/:idHowl`: Retrieves a howl by ID.
 - `GET /howls/user/:idUser`: Retrieves howls by a user.
 - `GET /howls/hashtag/:hashtag`: Retrieves howls by a hashtag.
 - `POST /howls`: Creates a new howl.
 - `GET /howls`: Retrieves all howls.
+- `POST /howls/like/:idHowl/:idUser`: Likes a howl.
+- `POST /howls/unlike/:idHowl/:idUser`: Unlikes a howl.
+- `POST /howls/reply/:idHowl`: Replies to a howl.
+- `POST /howls/rehowl/:idHowl`: Rehowls a howl.
+
 - `POST /notifications`: Creates a new notification.
 - `GET /notifications/:userTo`: Retrieves notifications for a user.
 - `PATCH /notifications/read/:id`: Marks a notification as read.
