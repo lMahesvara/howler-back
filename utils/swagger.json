@@ -1458,6 +1458,358 @@
           }
         }
       }
+    },
+    "/howls/reply/{idHowl}": {
+      "post": {
+        "tags": ["Howls"],
+        "description": "Reply to a howl",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Howl object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Howl"
+            },
+            "example": {
+              "idUser": "64910ab4390610b3c48d9bac",
+              "text": "Hello"
+            }
+          },
+          {
+            "in": "path",
+            "name": "idHowl",
+            "required": true,
+            "description": "ID of the howl to reply to",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Howl object that needs to be added",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Howl"
+              },
+              "example": {
+                "idUser": "64910ab4390610b3c48d9bac",
+                "text": "Hello"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A howl object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Howl"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "user": "64910ab4390610b3c48d9bac",
+                  "text": "Hello",
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/howls/rehowl/{idHowl}": {
+      "post": {
+        "tags": ["Howls"],
+        "description": "Rehowl a howl",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Id of the user that rehowled",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "idUser": {
+                  "type": "string",
+                  "description": "The user's id."
+                }
+              }
+            }
+          },
+          {
+            "in": "path",
+            "name": "idHowl",
+            "required": true,
+            "description": "ID of the howl to rehowl",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Id of the user that rehowled",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idUser": {
+                    "type": "string",
+                    "description": "The user's id."
+                  }
+                }
+              },
+              "example": {
+                "idUser": "64910ab4390610b3c48d9bac"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A howl object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Howl"
+                },
+                "example": {
+                  "_id": "64924cc1e362f005f8172fc0",
+                  "user": "64910ab4390610b3c48d9bac",
+                  "text": "Hello",
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/follow/followers/{idUser}": {
+      "get": {
+        "tags": ["Follow"],
+        "description": "Get followers by user id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of user objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "648f6805f51605bcb4e7cf68",
+                    "name": "John Doe",
+                    "email": "asdasd@asd.asd",
+                    "username": "asdasd",
+                    "howls": [],
+                    "followers": ["64910ab4390610b3c48d9bac"],
+                    "following": [],
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "updatedAt": "2023-06-21T03:11:47.708Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/follow/following/{idUser}": {
+      "get": {
+        "tags": ["Follow"],
+        "description": "Get following by user id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to get",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of user objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                },
+                "example": [
+                  {
+                    "_id": "648f6805f51605bcb4e7cf68",
+                    "name": "John Doe",
+                    "email": "asdasd@asd.asd",
+                    "username": "asdasd",
+                    "howls": [],
+                    "followers": ["64910ab4390610b3c48d9bac"],
+                    "following": [],
+                    "createdAt": "2023-06-18T20:24:37.343Z",
+                    "updatedAt": "2023-06-21T03:11:47.708Z",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/follow/{idUserFollow}/{idUser}": {
+      "patch": {
+        "tags": ["Follow"],
+        "description": "Follow a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idUserFollow",
+            "required": true,
+            "description": "ID of the user to follow",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/follow/unfollow/{idUserUnfollow}/{idUser}": {
+      "patch": {
+        "tags": ["Follow"],
+        "description": "Unfollow a user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idUserUnfollow",
+            "required": true,
+            "description": "ID of the user to unfollow",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "idUser",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "_id": "648f6805f51605bcb4e7cf68",
+                  "name": "John Doe",
+                  "email": "asdasd@asd.asd",
+                  "username": "asdasd",
+                  "howls": [],
+                  "followers": ["64910ab4390610b3c48d9bac"],
+                  "following": [],
+                  "createdAt": "2023-06-18T20:24:37.343Z",
+                  "updatedAt": "2023-06-21T03:11:47.708Z",
+                  "__v": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
   }
 }
