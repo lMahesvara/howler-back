@@ -19,6 +19,8 @@ import {
   getHowlsByUserId,
   rehowl,
   replyHowl,
+  likeHowl,
+  dislikeHowl
 } from '../controllers/howl.controller.js'
 import {
   followUser,
@@ -37,8 +39,8 @@ export const routes = Router()
 routes.get('/users/:id', getUser)
 routes.get('/users/username/:username', getUsersByUsername)
 routes.post('/users', addUser)
-routes.put('/users/:id', updateUser)
-routes.put('/users/password/:id', resetPassword)
+routes.patch('/users/:id', updateUser)
+routes.patch('/users/password/:id', resetPassword)
 
 routes.get('/hashtags/:name', getHashtags)
 routes.post('/hashtags', addHashtag)
@@ -62,8 +64,10 @@ routes.get('/howls/user/:idUser', getHowlsByUserId)
 routes.get('/howls/hashtag/:idHashtag', getHowlsByHashtag)
 routes.post('/howls', addHowl)
 routes.get('/howls', getHowls)
-routes.post('/howls/reply/:idHowl', replyHowl)
-routes.post('/howls/rehowl/:idHowl', rehowl)
+routes.patch('/howls/reply/:idHowl', replyHowl)
+routes.patch('/howls/rehowl/:idHowl', rehowl)
+routes.patch('/howls/like/:idHowl/:idUser', likeHowl)
+routes.patch('/howls/dislike/:idHowl/:idUser', dislikeHowl)
 
 routes.post('/notifications', addNotification)
 routes.get('/notifications/:userTo', getNotifications)
