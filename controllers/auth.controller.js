@@ -38,7 +38,7 @@ export const externalLogin = async (req, res) => {
     if (!user) {
       const newUser = new User({
         name,
-        username: Math.random().toString(36).substring(7),
+        username: `user${Math.random().toString(36).substring(2, 8)}`,
         email,
         image,
         token: id,
