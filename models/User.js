@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'Please provide an email for this user.'],
-      maxlength: [30, 'Email cannot be more than 30 characters'],
+      maxlength: [50, 'Email cannot be more than 30 characters'],
     },
     username: {
       type: String,
@@ -48,8 +48,8 @@ const UserSchema = new mongoose.Schema(
     ],
     token: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   { timestamps: true }
 )
