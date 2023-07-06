@@ -9,7 +9,7 @@ import {
 import { addHashtag, getHashtags } from '../controllers/hashtag.controller.js'
 import { getChats, getChat, read } from '../controllers/chat.controller.js'
 import { addMessage, getMessages } from '../controllers/message.controller.js'
-import { login } from '../controllers/auth.controller.js'
+import { externalLogin, login } from '../controllers/auth.controller.js'
 
 import {
   addHowl,
@@ -20,7 +20,7 @@ import {
   rehowl,
   replyHowl,
   likeHowl,
-  dislikeHowl
+  dislikeHowl,
 } from '../controllers/howl.controller.js'
 import {
   followUser,
@@ -58,6 +58,7 @@ routes.get('/follow/following/:idUser', getFollowing)
 routes.patch('/follow/unfollow/:idUserUnfollow/:idUser', unfollowUser)
 
 routes.post('/auth/login', login)
+routes.post('/auth/login/external', externalLogin)
 
 routes.get('/howls/:idHowl', getHowlById)
 routes.get('/howls/user/:idUser', getHowlsByUserId)
