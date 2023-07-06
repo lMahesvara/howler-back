@@ -17,8 +17,16 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'Please provide a username for this user.'],
       maxlength: [20, 'Username cannot be more than 20 characters'],
     },
-    image: String,
-    banner: String,
+    image: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dq6bsxacw/image/upload/v1688607947/7309681_yzfrpy.jpg',
+    },
+    banner: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dq6bsxacw/image/upload/v1688594594/howler/wqhnd7pmxlxbzbizaskw.jpg',
+    },
     password: String,
     howls: [
       {
