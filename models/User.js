@@ -46,6 +46,10 @@ const UserSchema = new mongoose.Schema(
         ref: 'User',
       },
     ],
+    token: {
+      type: String,
+      default: ''
+    }
   },
   { timestamps: true }
 )
