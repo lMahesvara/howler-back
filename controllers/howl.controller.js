@@ -5,8 +5,7 @@ import User from '../models/User.js'
 export const addHowl = async (req, res) => {
   const { user, text, image, hashtags } = req.body
 
-
-  if (!user || !text) {
+  if (!user) {
     return res.status(400).json({ message: 'Please provide all fields' })
   }
   try {
@@ -23,7 +22,7 @@ export const addHowl = async (req, res) => {
       { _id: user },
       { $push: { howls: howl.id } },
       { new: true }
-      )
+    )
 
     res.status(201).json(howl)
   } catch (error) {
@@ -78,7 +77,8 @@ export const getHowlsByHashtag = async (req, res) => {
 
 export const getHowls = async (_, res) => {
   try {
-    const howls = await Howl.find({})
+    //get howls ascending by date
+    const howls = await Howl.find().sort({ date: -1 })
     res.json(howls)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -109,10 +109,10 @@ export const likeHowl = async (req, res) => {
 }
 
 export const replyHowl = async (req, res) => {
-  const {idHowl} = req.params
-  const { idUser, text, image, hashtags} = req.body
+  const { idHowl } = req.params
+  const { user, text, image, hashtags } = req.body
 
-  if (!idHowl || !idUser || !text) {
+  if (!idHowl || !user) {
     return res.status(400).json({ message: 'Please provide all fields' })
   }
 
@@ -123,15 +123,20 @@ export const replyHowl = async (req, res) => {
     if (hashtags) {
       idsHashtags = await existingHashtag(hashtags)
     }
-    
-    const reply = new Howl({ user: idUser, text, image, type: 'reply', hashtags: idsHashtags })
+
+    const reply = new Howl({
+      user,
+      text,
+      image,
+      type: 'reply',
+      hashtags: idsHashtags,
+    })
 
     await reply.save()
     howl.replies.push(reply)
 
     await howl.save()
     res.status(201).json(reply)
-
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -158,7 +163,7 @@ export const rehowl = async (req, res) => {
       { _id: idUser },
       { $push: { howls: howl.id } },
       { new: true }
-      )
+    )
 
     res.status(201).json(howl)
   } catch (error) {
@@ -166,7 +171,7 @@ export const rehowl = async (req, res) => {
   }
 }
 
-const existingHashtag = async(hashtags) => {
+const existingHashtag = async hashtags => {
   const idsHashtags = []
   for (const hashtag of hashtags) {
     const newHashtag = await Hashtag.findOne({ name: hashtag })

@@ -11,12 +11,11 @@ const HowlSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: [true, 'Please provide a text for this howl.'],
     maxlength: [140, 'Howl cannot be more than 140 characters'],
   },
   image: {
     type: String,
-    default: ""
+    default: '',
   },
   likes: [
     {
