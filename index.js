@@ -5,6 +5,8 @@ import { routes } from './routes/routes.js'
 import swagger from './utils/swagger.json' assert { type: 'json' }
 import swaggerUi from 'swagger-ui-express'
 
+const PORT = process.env.PORT
+
 const app = express()
 await dbConnect()
 
@@ -15,6 +17,4 @@ app.use(routes)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swagger))
 
-app.listen(3002, () => {
-  console.log('Server is running on port 3000')
-})
+app.listen(PORT)
