@@ -33,6 +33,12 @@ export const externalLogin = async (req, res) => {
     return res.status(400).json({ message: 'Please provide all fields' })
   }
 
+  if (name.length > 20) {
+    return res
+      .status(400)
+      .json({ message: 'Name cannot be more than 20 characters' })
+  }
+
   try {
     const user = await User.findOne({ token: id })
     if (!user) {
