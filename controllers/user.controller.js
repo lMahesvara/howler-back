@@ -33,6 +33,21 @@ export const getUsersByUsername = async (req, res) => {
   }
 }
 
+export const getUserByUsername = async (req, res) => {
+  const { username } = req.params
+
+  if (!username) {
+    return res.status(400).json({ message: 'Please provide a username' })
+  }
+
+  try {
+    const user = await User.findOne({ username })
+    res.json(user)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 export const addUser = async (req, res) => {
   const { name, email, password, image, username, banner } = req.body
 

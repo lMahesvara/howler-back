@@ -53,7 +53,7 @@ export const getHowlsByUserId = async (req, res) => {
   }
 
   try {
-    const howls = await Howl.find({ user: idUser })
+    const howls = await Howl.find({ user: idUser }).sort({ date: -1 })
     res.json(howls)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -77,8 +77,7 @@ export const getHowlsByHashtag = async (req, res) => {
 
 export const getHowls = async (_, res) => {
   try {
-    //get howls ascending by date
-    const howls = await Howl.find().sort({ date: -1 })
+    const howls = await Howl.find({ type: 'howl' }).sort({ date: -1 })
     res.json(howls)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -115,14 +114,13 @@ export const dislikeHowl = async (req, res) => {
   }
 
   try {
-
     const howl = await Howl.findById(idHowl)
     if (howl.likes.includes(idUser)) {
       howl.likes = howl.likes.remove(idUser)
     }
 
     await howl.save()
-    res.json({likes: howl.likes.length })
+    res.json({ likes: howl.likes.length })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -172,20 +170,29 @@ export const rehowl = async (req, res) => {
 
   try {
     const howl = await Howl.findById(idHowl)
-    howl.rehowls.push(idUser)
 
-    // const rehowl = new Howl({ user: idUser, text: howl.text, image: howl.image, type: 'rehowl' })
+    if (howl.rehowls.includes(idUser)) {
+      howl.rehowls = howl.rehowls.remove(idUser)
+
+      console.log(howl.rehowls)
+
+      await User.findOneAndUpdate(
+        { _id: idUser },
+        { $pull: { howls: howl.id } },
+        { new: true }
+      )
+    } else {
+      howl.rehowls.push(idUser)
+
+      await User.findOneAndUpdate(
+        { _id: idUser },
+        { $push: { howls: howl.id } },
+        { new: true }
+      )
+    }
     await howl.save()
-    howl.rehowls.push(howl)
-    await howl.save()
 
-    const userUpdated = await User.findOneAndUpdate(
-      { _id: idUser },
-      { $push: { howls: howl.id } },
-      { new: true }
-    )
-
-    res.status(201).json(howl)
+    res.json({ rehowls: howl.rehowls.length })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

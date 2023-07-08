@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   addUser,
   getUser,
+  getUserByUsername,
   getUsersByUsername,
   resetPassword,
   updateUser,
@@ -38,6 +39,7 @@ export const routes = Router()
 
 routes.get('/users/:id', getUser)
 routes.get('/users/username/:username', getUsersByUsername)
+routes.get('/users/un/:username', getUserByUsername)
 routes.post('/users', addUser)
 routes.patch('/users/:id', updateUser)
 routes.patch('/users/password/:id', resetPassword)
