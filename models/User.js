@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide a username for this user.'],
       maxlength: [20, 'Username cannot be more than 20 characters'],
+      unique: true,
     },
     image: {
       type: String,
