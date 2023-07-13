@@ -22,6 +22,7 @@ import {
   replyHowl,
   likeHowl,
   dislikeHowl,
+  deleteHowl,
 } from '../controllers/howl.controller.js'
 import {
   followUser,
@@ -71,6 +72,7 @@ routes.patch('/howls/reply/:idHowl', replyHowl)
 routes.patch('/howls/rehowl/:idHowl', rehowl)
 routes.patch('/howls/like/:idHowl/:idUser', likeHowl)
 routes.patch('/howls/dislike/:idHowl/:idUser', dislikeHowl)
+routes.delete('/howls/:idHowl', deleteHowl)
 
 routes.post('/notifications', addNotification)
 routes.get('/notifications/:userTo', getNotifications)

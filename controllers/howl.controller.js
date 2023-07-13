@@ -198,6 +198,27 @@ export const rehowl = async (req, res) => {
   }
 }
 
+export const deleteHowl = async (req, res) => {
+  const { idHowl } = req.params
+
+  if (!idHowl) {
+    return res.status(400).json({ message: 'Please provide an id' })
+  }
+
+  try {
+    await Howl.findByIdAndDelete(idHowl)
+
+    await User.updateMany(
+      { howls: { $in: [idHowl] } },
+      { $pull: { howls: idHowl } }
+    )
+
+    res.json({ message: 'Howl deleted' })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 const existingHashtag = async hashtags => {
   const idsHashtags = []
   for (const hashtag of hashtags) {
