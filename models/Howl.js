@@ -11,7 +11,7 @@ const HowlSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    maxlength: [140, 'Howl cannot be more than 140 characters'],
+    maxlength: [255, 'Howl cannot be more than 140 characters'],
   },
   image: {
     type: String,
