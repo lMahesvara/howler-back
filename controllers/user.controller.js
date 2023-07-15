@@ -48,6 +48,27 @@ export const getUserByUsername = async (req, res) => {
   }
 }
 
+export const getMentions = async (req, res) => {
+  const { query } = req.params
+
+  if (!query) {
+    return res.status(400).json({ message: 'Please provide a query' })
+  }
+
+  try {
+    //search for users with query in name or username fields and limit to 10
+    const users = await User.find({
+      $or: [
+        { name: { $regex: query, $options: 'i' } },
+        { username: { $regex: query, $options: 'i' } },
+      ],
+    }).limit(10)
+    res.json(users)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 export const addUser = async (req, res) => {
   const { name, email, password, image, username, banner } = req.body
 
