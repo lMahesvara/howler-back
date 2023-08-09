@@ -33,7 +33,7 @@ export const getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({
       userTo: userTo,
-    })
+    }).sort({createdAt: -1})
     res.json(notifications)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -56,7 +56,7 @@ export const addNotification = async (req, res) => {
       body,
     })
     await notification.save()
-    res.status(201).json(notification)
+    res.json(notification)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
